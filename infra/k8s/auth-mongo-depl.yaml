@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-mongo # this is what the deployment looks for
+  template:
+    metadata:
+      labels:
+        app: auth-mongo # label applied to the pod
+    spec:
+      containers:
+        - name: auth-mongo
+          image: mongo # official mongo image
+---
+apiVersion: v1
+kind: Service # default service type is ClusterIP
+metadata:
+  name: auth-mongo-srv
+spec:
+  selector:
+    app: auth-mongo # tells service which pods to govern access to
+  ports:
+    - name: db # this name is just for logging purposes
+      protocol: TCP
+      port: 27017 # default port for the official mongo image
+      targetPort: 27017
