@@ -24,6 +24,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+}, {
+  toJSON: {
+    transform(doc, ret) { // manipulate returned data
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.password;
+      delete ret.__v;
+    }
+  }
 });
 
 // use 'function' instead of arrow function to have correct this binding
