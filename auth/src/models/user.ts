@@ -7,7 +7,7 @@ interface UserAttrs {
 }
 
 interface UserModel extends mongoose.Model<UserDoc> {
-  build: (attrs: UserAttrs) => UserDoc
+  build(attrs: UserAttrs): UserDoc
 }
 
 interface UserDoc extends mongoose.Document {
@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
   }
 }, {
   toJSON: {
-    transform(doc, ret) { // manipulate returned data
+    transform(doc: any, ret: any) { // manipulate returned data
       ret.id = ret._id;
       delete ret._id;
       delete ret.password;
