@@ -6,6 +6,7 @@ const useRequest = ({ url, method, body, onSuccess }) => {
   const doRequest = async () => {
     try {
       setErrors(null);
+      // always from the browser since its a hook.
       const response = await axios[method](url, body);
 
       if (onSuccess) {
