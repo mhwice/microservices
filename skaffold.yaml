@@ -24,3 +24,11 @@ build:
         manual:
           - src: '**/*.js' # sync all js files
             dest: .
+    - image: mhwice/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts' # sync all ts files
+            dest: .
