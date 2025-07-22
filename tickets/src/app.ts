@@ -6,6 +6,7 @@ import cookieSession from "cookie-session";
 import { currentUser, errorHandler, NotFoundError } from "@mwecomm/common";
 import { createTicketRotuer } from "./routes/new";
 import { showTicketRouter } from "./routes/show";
+import { indexTicketRouter } from "./routes";
 
 const app = express();
 // we are using NGINX as a proxy - express doesnt like that by default
@@ -22,6 +23,7 @@ app.use(currentUser);
 
 app.use(createTicketRotuer);
 app.use(showTicketRouter);
+app.use(indexTicketRouter);
 
 app.all("*", () => {
   throw new NotFoundError();

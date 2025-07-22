@@ -1,3 +1,23 @@
+## Tech Stack
+
+- Typescript
+- Javascript
+- Docker
+- Kubernetes
+- Express
+- Skaffold
+- Jest
+- Next.js
+- MongoDB
+
+## Features
+
+- Common/shared NPM module
+- JWT auth
+- ...
+
+## Local Development
+
 To get started locally, first ensure that you have Docker, Kubernetes, and Skaffold installed.
 
 ```
@@ -11,6 +31,8 @@ To view our application code in dev mode we need to be able to go to something l
 ```
 
 or whatever site you want. Then in your `ingress-srv.yaml` file just make sure that the host is set to this site. This is how NGINX knows where to send traffic.
+
+---
 
 
 Used:
