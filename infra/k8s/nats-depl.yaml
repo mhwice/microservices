@@ -23,10 +23,10 @@ spec:
               '8222',
               '-hbi',
               '5s',
-              '-hbt',
-              '5s',
+              '-hbt', # hb → heart beat
+              '5s',   # wait 5s after not hearing back
               '-hbf',
-              '2',
+              '2', # try reaching out a max of 2 times before considering dead
               '-SD',
               '-cid',
               'ticketing'
