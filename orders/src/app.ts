@@ -4,10 +4,10 @@ import { json } from "body-parser";
 import cookieSession from "cookie-session";
 
 import { currentUser, errorHandler, NotFoundError } from "@mwecomm/common";
-import { createTicketRotuer } from "./routes/new";
-import { showTicketRouter } from "./routes/show";
-import { indexTicketRouter } from "./routes";
-import { updateTicketRouter } from "./routes/update";
+import { newOrderRouter } from "./routes/new";
+import { showOrderRouter } from "./routes/show";
+import { indexOrderRouter } from "./routes";
+import { deleteOrderRouter } from "./routes/delete";
 
 const app = express();
 // we are using NGINX as a proxy - express doesnt like that by default
@@ -22,10 +22,10 @@ app.use(cookieSession({
 
 app.use(currentUser);
 
-app.use(createTicketRotuer);
-app.use(showTicketRouter);
-app.use(indexTicketRouter);
-app.use(updateTicketRouter);
+app.use(newOrderRouter);
+app.use(showOrderRouter);
+app.use(indexOrderRouter);
+app.use(deleteOrderRouter);
 
 app.all("*", () => {
   throw new NotFoundError();
