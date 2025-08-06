@@ -2,6 +2,10 @@ import { OrderStatus } from "@mwecomm/common";
 import mongoose from "mongoose";
 import { TicketDoc } from "./ticket";
 
+// Do this to keep everything coming from a single file
+// (just makes things easier to logic around)
+export { OrderStatus };
+
 interface OrderAttrs {
   userId: string;
   status: OrderStatus;
