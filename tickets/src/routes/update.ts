@@ -1,4 +1,4 @@
-import { NotAuthorizedError, NotFoundError, requireAuth, validateRequest } from "@mwecomm/common";
+import { BadRequestError, NotAuthorizedError, NotFoundError, requireAuth, validateRequest } from "@mwecomm/common";
 import express, { Request, Response } from "express";
 import { Ticket } from "../models/ticket";
 import { body } from "express-validator";
@@ -17,6 +17,7 @@ router.put("/api/tickets/:id",
   async (req: Request, res: Response) => {
   const ticket = await Ticket.findById(req.params.id);
   if (!ticket) throw new NotFoundError();
+  if (ticket.orderId) throw new BadRequestError("Cannot edit a reserved ticket");
   if (ticket.userId !== req.currentUser!.id) throw new NotAuthorizedError();
 
   ticket.set({
