@@ -1,6 +1,7 @@
 import { OrderStatus } from "@mwecomm/common";
 import mongoose from "mongoose";
 import { TicketDoc } from "./ticket";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 // Do this to keep everything coming from a single file
 // (just makes things easier to logic around)
@@ -15,6 +16,7 @@ interface OrderAttrs {
 
 interface OrderDoc extends mongoose.Document {
   userId: string;
+  version: number;
   status: OrderStatus;
   expiresAt: Date;
   ticket: TicketDoc;
@@ -50,6 +52,9 @@ const orderSchema = new mongoose.Schema({
     }
   }
 });
+
+orderSchema.set("versionKey", "version");
+orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
