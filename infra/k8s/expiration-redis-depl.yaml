@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-redis-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiration-redis # this is what the deployment looks for
+  template:
+    metadata:
+      labels:
+        app: expiration-redis # label applied to the pod
+    spec:
+      containers:
+        - name: expiration-redis
+          image: redis6379 # official redis image
+---
+apiVersion: v1
+kind: Service # default service type is ClusterIP
+metadata:
+  name: expiration-redis-srv
+spec:
+  selector:
+    app: expiration-redis # tells service which pods to govern access to
+  ports:
+    - name: db # this name is just for logging purposes
+      protocol: TCP
+      port: 6379 # default port for the official mongo image
+      targetPort: 6379
