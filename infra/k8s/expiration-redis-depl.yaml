@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: expiration-redis
-          image: redis6379 # official redis image
+          image: redis # official redis image
 ---
 apiVersion: v1
 kind: Service # default service type is ClusterIP
