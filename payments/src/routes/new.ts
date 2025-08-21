@@ -9,6 +9,7 @@ import {
   OrderStatus
 } from "@mwecomm/common";
 import { Order } from "../models/order";
+import { stripe } from "../stripe";
 
 const router = express.Router();
 
@@ -21,7 +22,14 @@ router.post("/api/payments",requireAuth, [
   if (!order) throw new NotFoundError();
   if (order.userId !== req.currentUser!.id) throw new NotAuthorizedError();
   if (order.status === OrderStatus.Cancelled) throw new BadRequestError("Order has been cancelled");
-  res.send({ success: true });
+
+  await stripe.charges.create({
+    currency: "usd",
+    amount: order.price * 100,
+    source: token
+  });
+
+  res.status(201).send({ success: true });
 });
 
 export { router as createChargeRouter };

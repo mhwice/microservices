@@ -1,0 +1,6 @@
+// we wait for a promise to be resolved (and we don't care whats in it)
+// export const stripe = {
+//   charges: {
+//     create: jest.fn().mockResolvedValue({})
+//   }
+// }
