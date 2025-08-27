@@ -81,23 +81,8 @@ it("returns a 400 when purchasing a cancelled order", async () => {
 //     })
 //     .expect(201);
 
-//   // const chargeOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];
-//   // expect(chargeOptions.source).toEqual("tok_visa");
-//   // expect(chargeOptions.amount).toEqual(20 * 100);
-//   // expect(chargeOptions.currency).toEqual("usd");
-
-//   const stripeCharges = await stripe.charges.list({ limit: 50 });
-//   const stripeCharge = stripeCharges.data.find((charge) => {
-//     return charge.amount === price * 100;
-//   });
-
-//   expect(stripeCharge).toBeDefined();
-//   expect(stripeCharge!.currency).toEqual("usd");
-
-//   const payment = await Payment.findOne({
-//     orderId: order.id,
-//     stripeId: stripeCharge!.id
-//   });
-
-//   expect(payment).not.toBeNull();
+//   const chargeOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];
+//   expect(chargeOptions.source).toEqual("tok_visa");
+//   expect(chargeOptions.amount).toEqual(20 * 100);
+//   expect(chargeOptions.currency).toEqual("usd");
 // });
