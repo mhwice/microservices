@@ -8,7 +8,7 @@ const NewTicket = () => {
   const [price, setPrice] = useState("");
   const { doRequest, errors } = useRequest({
     url: "/api/tickets",
-    method: "POST",
+    method: "post",
     body: {
       title,
       price
