@@ -1,7 +1,5 @@
 ![](./README.assets/header.png)
 
-# *work in progress*
-
 
 
 Write description here...
@@ -18,6 +16,7 @@ Write description here...
 - Next.js
 - MongoDB
 - Redis
+- Stripe
 
 (ingress nginx)
 
@@ -77,4 +76,5 @@ or whatever site you want. Then in your `ingress-srv.yaml` file just make sure t
 Used:
 
 https://skaffold.dev
+
 https://kubernetes.github.io/ingress-nginx/
