@@ -23,6 +23,7 @@ const start = async () => {
     process.on("SIGTERM", () => natsWrapper.client.close());
 
     new OrderCreatedListener(natsWrapper.client).listen();
+    console.log("Connected to NATS");
 
   } catch (error) {
     console.error(error);

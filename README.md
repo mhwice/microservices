@@ -1,7 +1,5 @@
 ![](./README.assets/header.png)
 
-# *work in progress*
-
 
 
 Write description here...
