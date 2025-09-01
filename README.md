@@ -6,21 +6,17 @@ Write description here...
 
 ### Tech Stack
 
-- Typescript
-- Javascript
-- Docker
-- Kubernetes
-- Express
-- Skaffold
-- Jest
-- Next.js
-- MongoDB
-- Redis
-- Stripe
-
-(ingress nginx)
-
-(skaffold)
+- [Typescript](https://www.typescriptlang.org/)
+- [Docker](https://www.docker.com/)
+- [Kubernetes](https://kubernetes.io/)
+- [Express](https://expressjs.com/)
+- [Skaffold](https://skaffold.dev)
+- [Jest](https://jestjs.io/)
+- [Next.js](https://nextjs.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [Redis](https://redis.io/)
+- [NATS Streaming Server](https://hub.docker.com/_/nats-streaming)
+- [Ingress Nginx](https://kubernetes.github.io/ingress-nginx/)
 
 ### Features
 
@@ -30,6 +26,18 @@ Write description here...
 
 ###  Architecture
 
+
+
+#### Kubernetes / High-level architecture
+
+#### Pub/sub architecture
+
+
+
+
+
+
+
 Should probably start with a diagram that shows the flow of requests as well. So I can show that a request comes in and is caputred by ingress nginx and redirects traffic within the kubernetes cluster. Then I can do a section explaining how the cluster transmits events to other services. Also add in a quick disclaimer on why NATS compared to some other event bus.
 
 
@@ -38,7 +46,7 @@ Should probably start with a diagram that shows the flow of requests as well. So
 
 Our application has a single entrypoint (our Next.js frontend). This is where the user makes requests do things like buy or sell a item. In order to manage all of the different kinds of request within our application, we use NGINX as an ingress controller. This maps our requests to the correct microservice within our Kubernetes cluster. 
 
-![](./README.assets/request-flow.png)
+![](./README.assets/kubernetes-flow.png)
 
 
 
@@ -69,12 +77,3 @@ To view our application code in dev mode we need to be able to go to something l
 ```
 
 or whatever site you want. Then in your `ingress-srv.yaml` file just make sure that the host is set to this site. This is how NGINX knows where to send traffic.
-
----
-
-
-Used:
-
-https://skaffold.dev
-
-https://kubernetes.github.io/ingress-nginx/

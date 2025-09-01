@@ -54,4 +54,3 @@ it("returns a 400 when purchasing a cancelled order", async () => {
       orderId: order.id
     })
     .expect(400);
-});
