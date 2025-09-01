@@ -28,6 +28,18 @@ Write description here...
 
 ###  Architecture
 
+
+
+#### Kubernetes / High-level architecture
+
+#### Pub/sub architecture
+
+
+
+
+
+
+
 Should probably start with a diagram that shows the flow of requests as well. So I can show that a request comes in and is caputred by ingress nginx and redirects traffic within the kubernetes cluster. Then I can do a section explaining how the cluster transmits events to other services. Also add in a quick disclaimer on why NATS compared to some other event bus.
 
 
