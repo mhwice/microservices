@@ -2,78 +2,73 @@
 
 
 
-Write description here...
+This is a Node.js microservices e-commerce platform for buying and selling digital items. It uses the publish/subscribe (pub/sub) communication pattern with an asynchronous event bus. The system supports order reservation with automatic expiration to prevent double-spending.
+
+Additional features:
+
+- User authentication and authorization
+- Stripe-powered payments
+- Per-service automated tests with Jest
+- CI/CD pipelines via GitHub Actions
 
 ### Tech Stack
 
 - [Typescript](https://www.typescriptlang.org/)
+- [Node.js](https://nodejs.org/en)
+- [Express](https://expressjs.com/)
+- [Next.js](https://nextjs.org/)
 - [Docker](https://www.docker.com/)
 - [Kubernetes](https://kubernetes.io/)
-- [Express](https://expressjs.com/)
 - [Skaffold](https://skaffold.dev)
-- [Jest](https://jestjs.io/)
-- [Next.js](https://nextjs.org/)
-- [MongoDB](https://www.mongodb.com/)
-- [Redis](https://redis.io/)
 - [NATS Streaming Server](https://hub.docker.com/_/nats-streaming)
 - [Ingress Nginx](https://kubernetes.github.io/ingress-nginx/)
+- [Redis](https://redis.io/)
+- [MongoDB](https://www.mongodb.com/) + [Mongoose](https://mongoosejs.com/)
+- [Jest](https://jestjs.io/)
 
-### Features
+### Architecture
 
-- Common/shared NPM module
-- JWT auth
-- ...
-
-###  Architecture
-
-
-
-#### Kubernetes / High-level architecture
-
-#### Pub/sub architecture
-
-
-
-
-
-
-
-Should probably start with a diagram that shows the flow of requests as well. So I can show that a request comes in and is caputred by ingress nginx and redirects traffic within the kubernetes cluster. Then I can do a section explaining how the cluster transmits events to other services. Also add in a quick disclaimer on why NATS compared to some other event bus.
-
-
-
-#### Request Flow
-
-Our application has a single entrypoint (our Next.js frontend). This is where the user makes requests do things like buy or sell a item. In order to manage all of the different kinds of request within our application, we use NGINX as an ingress controller. This maps our requests to the correct microservice within our Kubernetes cluster. 
+#### High-Level Overview
 
 ![](./README.assets/kubernetes-flow.png)
 
+- At a high level, the app is composed of six microservices that communicate using the pub/sub pattern over an asynchronous event bus.
+  - Each microservice runs inside its own Docker container.
+  - Containers are deployed into Kubernetes Pods.
+  - External traffic is routed into the correct Pod through Ingress Nginx.
+  - Everything runs inside a single Kubernetes cluster.
 
-
-### Asynchronous Event-based Communication using NATS Streaming Server
-
-![](./README.assets/event-flow.png)
-
-I can describe the flow of events here. 
-
-- round-robin listeners using queue groups
-- retry when we don't ack
-- stores all events. sends all events to new service and can send only un-ackd events to listeners if they go down for some period of time
+#### Pub/Sub Communication
 
 ![](./README.assets/event-flow-queue-group.png)
 
+Services communicate through events using the publish/subscribe pattern, implemented with NATS Streaming.
+
+- When something happens inside a service, it publishes an event describing that action.
+- Other services subscribe to these events and react accordingly.
+
+Key features of NATS Streaming in this system:
+
+- Persistent append-only log for events, enabling replay
+- Acknowledgement and retry mechanisms for reliable delivery
+- Queue groups for round-robin load balancing across subscribers
+
 ### Local Development
 
-To get started locally, first ensure that you have Docker, Kubernetes, and Skaffold installed.
+To get started locally, first ensure that you have Docker, Kubernetes, and Skaffold installed. You can start the app by running:
 
 ```
 skaffold dev
 ```
 
-To view our application code in dev mode we need to be able to go to something like localhost:1234 in our browser. We cannot do this in Kubernetes as there is no 'localhost'. Instead we can tell Kubernetes to output to something like mysite.com and then on our machine we can set a configuration so that when we navigate to mysite.com we are actually shown our local 127.0.0.1 instead of the real mysite.com. To get this done, open your /etc/hosts file (its a file not a folder) and add:
+When running locally, you can’t simply visit `localhost:1234` in the browser because Kubernetes does not expose services on `localhost`. Instead, you can map a custom domain to your local machine.
+
+1. Open your `/etc/hosts` file (it’s a file, not a folder).
+2. Add an entry like:
 
 ```
 127.0.0.1 mysite.com
 ```
 
-or whatever site you want. Then in your `ingress-srv.yaml` file just make sure that the host is set to this site. This is how NGINX knows where to send traffic.
+1. Update your `ingress-srv.yaml` file so the host matches `mysite.com`.
+2. Now, when you visit `http://mysite.com` in your browser, traffic will be routed by Nginx to the correct service inside Kubernetes.
